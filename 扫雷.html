@@ -1,0 +1,162 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery</title>
+	<script src="jquery1.12.1.js"></script>
+</head>
+<style>
+	.sence{
+		width:660px;
+		height:660px;
+		border:1px solid black;
+	}
+	.block{
+		width:28px;
+		height:28px;
+		border:1px solid black;
+		float:left;
+	}
+	.red{
+		background: red;
+	}
+	.orange{
+		background: orange;
+	}
+	.yellow{
+		background: yellow;
+	}
+	.green{
+		background: green;
+	}
+	.blue{
+		background: blue;
+	}
+	.purple{
+		background: purple;
+	}
+	.pink{
+		background: pink;
+	}
+	
+	.grey{
+		background: #486575;
+	}
+	.black{
+		background: black;
+	}
+	.scale{
+		-webkit-animation:bow 0.6s ease;
+		animation:bow 0.6s ease;
+	}
+	.a{
+		border-radius: 50%;
+	}
+	.b{width:28px;
+		height:28px;
+		border:1px solid black;
+		float:left;
+		background: rgba(0,0,0,0.5)
+	}
+	@-webkit-keyframes bow{
+          0%{
+          		transform: scale(1,1)
+          }
+          50%{
+          	transform: scale(2,2)
+          }
+          100%{
+          		transform: scale(1,1)
+          }
+		}
+		@keyframes bow{
+          0%{
+          		transform: scale(1,1)
+          }
+          50%{
+          	transform: scale(2,2)
+          }
+          100%{
+          		transform: scale(1,1)
+          }
+		}
+</style>
+<body>
+	<div class="sence"></div>
+</body>
+</html>
+<script>
+	$(function(){
+/*$el.attr(属性名,属性值); //遍历jq对象中的每一个dom对象,全部设置属性,如果只有一个参数：属性名,则只会取出jq对象中那个dom集合中的第一个dom对象的属性值。也可以以对象类型添加多个属性。$el.attr({a:1,b:2})
+例子：$('ul li').attr('val',function(){return Math.random()});
+$el.prop //常用在对表单属性的操作
+$el.addClas(index,oddclass)   
+例子：$('ul li').addClass(function(i,c){
+var tmp=c.split('');//之前多个类名，添加类名，用此方法把字符串非诚数组
+    return  tmp[tmp.length-1]+i //添加最后一个类名+i 的类
+})
+$el.toggleClass();//开关类型的增加或者移除class
+例子：可以判断*/
+
+
+
+var colors=['red','orange','yellow','green','blue','purple','pink']
+var h='';
+var row=22;
+for(var i=0;i<row*row;i++){
+h+='<div></div>';
+}
+$('.sence').html(h).find('div').addClass('block')/*.attr('lei',function(){
+	if(Math.random()>0.8){
+		return 'true'
+	}
+})*/
+.end()
+.find('div:lt(22)').removeClass().addClass('b')
+.end()
+.find('div:gt(461)').removeClass().addClass('b')
+.end()
+.find('div:nth-child(22n+1)').removeClass().addClass('b')
+.end()
+.find('div:nth-child(22n)').removeClass().addClass('b')
+
+$('.block').each(function(i){
+    if(Math.random()>0.8){
+    	$(this).data('lei',true).addClass('a')
+    }
+   $(this).addClass(colors[i%7]);
+
+})
+$('.sence div').each(function(i){
+	$(this).data('index',i)
+})
+ 
+.click(function(){
+	if($(this).data('lei')){
+		alert('bow!');
+		$('.block').removeClass().addClass('block').addClass(function(i){
+			if($('.block').eq(i).data('lei')){
+				$('.block').eq(i).css('animation-delay',Math.random().toFixed(2)+'s')
+				return 'grey scale';
+			}
+		});
+		$(this).addClass('black')
+	}else{
+		var pos=$(this).data('index');
+		var num=0;
+		if($('.sence div').eq(pos-1).data('lei')){num++;}
+        if($('.sence div').eq(pos+1).data('lei')){num++;}
+        if($('.sence div').eq(pos-22).data('lei')){num++;}
+        if($('.sence div').eq(pos-21).data('lei')){num++;}
+        if($('.sence div').eq(pos-23).data('lei')){num++;}
+        if($('.sence div').eq(pos+21).data('lei')){num++;}
+        if($('.sence div').eq(pos+22).data('lei')){num++;}
+        if($('.sence div').eq(pos+23).data('lei')){num++;}
+
+		$(this).text(num);
+	}
+})
+
+//使用data可以隐藏保存数据.(保存在内存中的)比设置属性的好.
+
+	})
+</script>
